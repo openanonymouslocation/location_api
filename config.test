@@ -1,0 +1,9 @@
+{
+"pathMainWeb":"api",
+"conn":{
+  "host": "localhost",
+  "user": "root",
+  "password": false,
+  "database": "geolocations"
+  }
+  }

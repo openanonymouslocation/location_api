@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+  Upload CSV Gelocations test
+  </title>
+
+  <link rel="stylesheet" href="stylesheets/grid.css" />
+  <link rel="stylesheet" href="stylesheets/slickgrid.css">
+  <link rel="stylesheet" href="javascripts/vendor/slickgrid/2.2/slick.grid.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+
+  <script type="text/javascript" src="javascripts/vendor/underscore/1.4.4/underscore.js"></script>
+  <script type="text/javascript" src="javascripts/vendor/backbone/1.0.0/backbone.js"></script>
+  <script type="text/javascript" src="javascripts/vendor/mustache/0.5.0-dev/mustache.js"></script>
+
+  <script type="text/javascript" src="javascripts/vendor/slickgrid/2.2/jquery-ui-1.8.16.custom.min.js"></script>
+  <script type="text/javascript" src="javascripts/vendor/slickgrid/2.2/jquery.event.drag-2.2.js"></script>
+  <script type="text/javascript" src="javascripts/vendor/slickgrid/2.2/slick.core.js"></script>
+  <script type="text/javascript" src="javascripts/vendor/slickgrid/2.2/slick.grid.js"></script>
+  <script type="text/javascript" src="javascripts/vendor/slickgrid/2.2/slick.formatters.js"></script>
+  <script type="text/javascript" src="javascripts/vendor/slickgrid/2.2/slick.editors.js"></script>
+  <script type="text/javascript" src="javascripts/vendor/slickgrid/2.2/plugins/slick.rowselectionmodel.js"></script>
+  <script type="text/javascript" src="javascripts/vendor/slickgrid/2.2/plugins/slick.rowmovemanager.js"></script>
+  <!-- include the backend code you need e.g. here for csv -->
+  <script type="text/javascript" src="http://okfnlabs.org/csv.js/csv.js"></script>
+
+  <!-- Or you can just include all of recline. -->
+
+  <script type="text/javascript" src="javascripts/recline.min.js"></script>
+
+  <style>
+    .slick-header-column {
+      min-height: 32px !important;
+    }
+
+    #results {
+      width: 100%;
+      background-color: #f2f2f2;
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+      <img src="img/logov5_64x64.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      Open Anonymous Location test API
+    </a>
+  </nav>
+  <div class="container">
+    <h4>/INSERTCSV</h4>
+    <p>
+      File Sample <br>
+      <a target="_blank" href="data/geolocations_sample.csv">geolocations_sample.csv</a>
+    </p>
+    <form>
+      <div class="form-group">
+        <label for="exampleInputFile">Load CSV</label>
+        <input type="file" class="my-file-input" id="exampleInputFile">
+
+      </div>
+
+    </form>
+
+    <form>
+      <div class="form-group">
+        <button id="bt_send" type="button" class="btn btn-default btn-warning">Upload to OpenAnonymousLocation</button>
+      </div>
+    </form>
+    <hr>
+    <div id="results"></div>
+    <div id="mygrid" style="height: 500px"></div>
+
+  </div>
+
+  <script>
+    $.ajaxSetup({
+      cache: true
+    });
+    var dataset;
+    $(document).ready(function() {
+      var $file = $('.my-file-input')[0];
+
+      $($file).change(function(e) {
+        dataset = new recline.Model.Dataset({
+          file: $file.files[0],
+          backend: 'csv'
+        });
+        dataset.fetch();
+        var grid = new recline.View.Grid({
+          model: dataset
+        });
+        $('#mygrid').html(grid.el);
+        $('#text_resource_name').val(nameF($('.my-file-input').val()));
+      });
+
+
+      $('#bt_send').on('click', function() {
+        if (dataset) {
+
+          var now = new Date();
+
+          var _data = {
+            geolocations:JSON.stringify(dataset.records)};
+
+          var request = $.ajax({
+            url: "/api/v1/insertCSV",
+            method: "POST",
+            data:  _data,
+            dataType: "json",
+            success: function(data) {
+              console.info(data);
+            
+                alert(data.Message);
+
+            },
+            error:function( jqXHR, textStatus,err ) {
+              console.info(textStatus);
+            }
+          });
+
+        } else {
+          alert("No CSV loaded")
+
+        }
+      })
+
+
+
+
+    });
+
+function toLowerCase(valor){
+  valor=valor.toLowerCase();
+  return valor;
+}
+
+    function gRI(min, max) {
+      return Math.floor(max - Math.random() * (max - min))
+    }
+
+    function nameF(fullPath) {
+
+      var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+      var filename = fullPath.substring(startIndex);
+      if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+        filename = filename.substring(1);
+      }
+      return filename;
+
+    }
+  </script>
+
+</body>
+
+</html>

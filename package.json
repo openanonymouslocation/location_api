@@ -1,0 +1,23 @@
+{
+  "name": "location_api",
+  "version": "1.0.0",
+  "description": "Open Anonymous Location API",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "csv": "^1.1.1",
+    "debug": "~2.6.3",
+    "express": "*",
+    "fast-csv": "^2.3.0",
+    "json-2-csv": "^2.1.2",
+    "morgan": "~1.8.1",
+    "mysql": "^2.15.0",
+    "request": "2.81.0",
+    "serve-favicon": "~2.4.2",
+    "sql-template-strings": "^2.2.2",
+    "uuid": "^2.0.3"
+  },
+  "author": "OpenAnonymousLocation",
+  "license": "MIT"
+}
