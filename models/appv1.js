@@ -84,7 +84,7 @@ function sentenceSQL(sql_sentence, type, format, callback) {
                 geoJSON.features.push({
                   "type": "Feature",
                   "properties": {
-                    "id": 1,
+                    "id": rows[i].id,
                     "device": rows[i].device,
                     "session": rows[i].session,
                     "lat": rows[i].lat,

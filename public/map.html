@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>insertLocations test</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+	<script src="https://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
+	<script src="https://calvinmetcalf.github.io/leaflet-ajax/example/spin.js"></script>
+	<script src="https://calvinmetcalf.github.io/leaflet-ajax/example/leaflet.spin.js"></script>
+<script>
+//https://www.sitepoint.com/get-url-parameters-with-javascript/
+function getAllUrlParams(url) {   var queryString = url ? url.split('?')[1] : window.location.search.slice(1);   var obj = {};   if (queryString) {     queryString = queryString.split('#')[0];     var arr = queryString.split('&');     for (var i=0; i<arr.length; i++) {       var a = arr[i].split('=');       var paramNum = undefined;       var paramName = a[0].replace(/\[\d*\]/, function(v) {         paramNum = v.slice(1,-1);         return '';       });       var paramValue = typeof(a[1])==='undefined' ? true : a[1];       paramName = paramName.toLowerCase();       paramValue = paramValue.toLowerCase();        if (obj[paramName]) {         if (typeof obj[paramName] === 'string') {           obj[paramName] = [obj[paramName]];         }         if (typeof paramNum === 'undefined') {           obj[paramName].push(paramValue);         }         else {           obj[paramName][paramNum] = paramValue;         }       }       else {         obj[paramName] = paramValue;       }     }   }    return obj; }
+</script> 
+<style>
+html{overflow:hidden}
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+      <img src="img/logov5_64x64.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      Open Anonymous Location Device Map
+    </a>
+  </nav>
+
+  
+  <div id="map" style="position:absolute; top:50px;left:0px;width: 100%; height: 94%;"></div>
+ 
+
+  <script>
+    $(document).ready(function() {
+
+	
+	var device=getAllUrlParams().device; 
+      var map = L.map('map').setView([41.4, 2.1], 4);
+
+
+      L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+ 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+ 	subdomains: 'abcd',
+ 	minZoom: 0,
+ 	maxZoom: 20,
+ 	ext: 'png'
+ }).addTo(map);
+ 
+ 
+ function popUp(f,l){
+    var out = [];
+    if (f.properties){
+        for(key in f.properties){
+            out.push(key+": "+f.properties[key]);
+        }
+        l.bindPopup(out.join("<br />"));
+    }
+}
+
+
+if(device){
+
+	var _urlGeoJSON='http://openanonymouslocation.org/api/v1/getByDevice/' + device + '/?';
+	var _layer;
+	$.ajax({
+    url: _urlGeoJSON,
+    jsonp: "callback",
+    dataType: "jsonp",
+    data: {
+        format: "geojson"
+    },
+    success: function( geojson ) {
+		_layer=new L.geoJson(geojson, {
+          pointToLayer: function (feature, latlng) {
+			return L.circleMarker(latlng, {
+				radius: 8,
+				fillColor: "#0000ff",
+				color: "#fff",
+				weight: 3,
+				opacity: 1,
+				fillOpacity: 0.8
+			});
+		},
+          onEachFeature: popUp   
+        }).addTo(map);  
+		
+		map.fitBounds(_layer.getBounds());
+    }
+});
+	
+}
+
+    });
+	
+	
+  </script>
+
+
+
+</body>
+
+</html>

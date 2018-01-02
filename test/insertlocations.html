@@ -13,20 +13,24 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
   <style>
     #console {
-      width: 99%;
-      height: 140px;
-      overflow: auto;
-      background-color: black;
-      color: #ffffff;
+         width: 99%;
+    height: 120px;
+    overflow: auto;
+    background-color: black;
+    color: #ffffff;
+    font-size: 0.8em;
     }
 #device_link{
-
-width:99%;
-height: 160px;
+    width: 99%;
+    height: 200px;
+    background-color: #FCF8E3;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 0.9em;
 
 }
     .green {
-      color: green
+         color: #1dff00;
     }
 
     .red {
@@ -90,7 +94,8 @@ height: 160px;
 
 
         $('#device_link').html('<div>Test getByDevice</div><a target="blank" href="/api/v1/getByDevice/' + device + '/" >/api/v1/getByDevice/' + device + '/ </a>'+
-        '<div>Test getByBBox</div><a target="blank" href="/api/v1/getByBBOX/' + map.getBounds().toBBoxString() + '/" >/api/v1/getByDevice/' + map.getBounds().toBBoxString()+ '/ </a>'+
+		'<div>Map getByDevice</div><a target="blank" href="/map.html?device=' + device + '" >/map.html?device=' + device + ' </a>'+
+        '<div>Test getByBBox</div><a target="blank" href="/api/v1/getByBBOX/' + map.getBounds().toBBoxString() + '/" >/api/v1/getByBBOX/' + map.getBounds().toBBoxString()+ '/ </a>'+
         '<div>Test getDownload</div><a target="blank" href="/api/v1/getDownload" >/api/v1/getByDownload </a>'
       );
 
