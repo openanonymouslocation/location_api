@@ -11,9 +11,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
-	<script src="https://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
-	<script src="https://calvinmetcalf.github.io/leaflet-ajax/example/spin.js"></script>
-	<script src="https://calvinmetcalf.github.io/leaflet-ajax/example/leaflet.spin.js"></script>
+	
 <script>
 //https://www.sitepoint.com/get-url-parameters-with-javascript/
 function getAllUrlParams(url) {   var queryString = url ? url.split('?')[1] : window.location.search.slice(1);   var obj = {};   if (queryString) {     queryString = queryString.split('#')[0];     var arr = queryString.split('&');     for (var i=0; i<arr.length; i++) {       var a = arr[i].split('=');       var paramNum = undefined;       var paramName = a[0].replace(/\[\d*\]/, function(v) {         paramNum = v.slice(1,-1);         return '';       });       var paramValue = typeof(a[1])==='undefined' ? true : a[1];       paramName = paramName.toLowerCase();       paramValue = paramValue.toLowerCase();        if (obj[paramName]) {         if (typeof obj[paramName] === 'string') {           obj[paramName] = [obj[paramName]];         }         if (typeof paramNum === 'undefined') {           obj[paramName].push(paramValue);         }         else {           obj[paramName][paramNum] = paramValue;         }       }       else {         obj[paramName] = paramValue;       }     }   }    return obj; }

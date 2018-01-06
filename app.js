@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/'+_f.pathMainWeb+'/endpoint', endpoint);
 app.use('/'+_f.pathMainWeb+'/v1/', v1);
 app.use('/', index);
-app.use('/'+_f.pathMainWeb+'/test/', express.static('test'));
+//app.use('/'+_f.pathMainWeb+'/test/', express.static('test'));
 
 
 
