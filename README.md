@@ -27,7 +27,8 @@ The OpenAnonymousLocation API provide you methods to publish and request geoloca
     lon: 2.20155716,
     timestamp: 1514737185665 }
   ]
-    ```
+```
+
 - `/locations/getDownload` - Get all Points
 
 - `/locations/getByDevice/{device}`- Get points by device
