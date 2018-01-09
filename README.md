@@ -12,7 +12,7 @@ The OpenAnonymousLocation API provide you methods to publish and request geoloca
 
 #### Methods:
 
-- `/locations/insertCSV` - POST: Insert array JSON from CSV
+- `/api/v1/insertCSV` - POST: Insert array JSON from CSV
 
     Mandatory body parameter:
     `geolocations`
@@ -29,9 +29,9 @@ The OpenAnonymousLocation API provide you methods to publish and request geoloca
   ]
 ```
 
-- `/locations/getDownload` - Get all Points
+- `/api/v1/getDownload` - Get all Points
 
-- `/locations/getByDevice/{device}`- Get points by device
+- `/api/v1/getByDevice/{device}`- Get points by device
 
     Mandatory parameter:
 
@@ -47,7 +47,7 @@ The OpenAnonymousLocation API provide you methods to publish and request geoloca
 
      `format` - JSON || GEOJSON
 
-- `/locations/getByBBOX/{bbox}` - Get points by bounding box
+- `/api/v1/getByBBOX/{bbox}` - Get points by bounding box
 
     Mandatory parameter:
 
@@ -63,7 +63,7 @@ The OpenAnonymousLocation API provide you methods to publish and request geoloca
 
     `format` - JSON || GEOJSON
 
-- `/locations/insertLocations/{device}` - Insert a geolocation
+- `/api/v1/insertLocations/{device}` - Insert a geolocation
 
     Mandatory parameters:
 
