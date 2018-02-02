@@ -105,7 +105,8 @@ The OpenAnonymousLocation API provide you methods to publish and request geoloca
 #### Sample requests
 [http://openanonymouslocation.org/api/v1/getByDevice/demo-openanonymouslocation-web](http://openanonymouslocation.org/api/v1/getByDevice/demo-openanonymouslocation-web)
 [http://openanonymouslocation.org/api/v1/getByBBOX/2.0370411872863774,41.374828065836084,2.060623168945313,41.38126849498621/](http://openanonymouslocation.org/api/v1/getByBBOX/2.0370411872863774,41.374828065836084,2.060623168945313,41.38126849498621/)
-
+[http://openanonymouslocation.org/api/v1/getLastPosition/demo-openanonymouslocation-web](http://openanonymouslocation.org/api/v1/getLastPosition/demo-openanonymouslocation-web)
+[http://openanonymouslocation.org/api/v1/getDownload/demo-openanonymouslocation-web](http://openanonymouslocation.org/api/v1/getDownload/demo-openanonymouslocation-web)
 
 
 ## Documentation
