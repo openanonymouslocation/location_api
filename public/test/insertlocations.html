@@ -121,11 +121,18 @@
       function sendRequest(lat, lon) {
         var d = new Date();
         var n = d.getTime();
-        var _url = "/api/v1/insertLocations/" + device + "/?session=" + session + "&lat=" + lat.toFixed(7) + "&lon=" + lon.toFixed(7) + "&timestamp=" + n;
+        var _url = "/api/v1/insertLocations/" + device + "/?";
         $("#console").append('<div>' + _url + '</div>');
 
         $.ajax({
           url: _url,
+          method: 'post',
+          data: {
+            session: session,
+            lat: lat.toFixed(7),
+            lon: lon.toFixed(7),
+            timestamp: n
+          },
           success: function(result) {
             var obj = result;
             console.info(obj);
@@ -136,8 +143,6 @@
             $("#console").append('<div class="red">' + +xhr.status + '' + xhr.statusText + '</div>');
           }
         });
-
-
       }
 
       function createUUID() {
