@@ -10,6 +10,7 @@
     "debug": "~2.6.3",
     "express": "*",
     "fast-csv": "^2.3.0",
+    "is-coordinates": "^2.0.2",
     "json-2-csv": "^2.1.2",
     "morgan": "~1.8.1",
     "mysql": "^2.15.0",

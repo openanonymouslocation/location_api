@@ -12,24 +12,21 @@ The OpenAnonymousLocation API provide you methods to publish and request geoloca
 
 #### Methods:
 
-- `/api/v1/insertCSV` - POST: Insert array JSON from CSV
-
-    Mandatory body parameter:
-    `geolocations`
-
-    Sample Array JSON:
-```
-  [
-  { id: 13,
-    device: 'b2cda548-afaf-4073-9a53-4ed8bab7ea76',
-    session: '9f869b70-1e21-4b7e-84c4-07f68b95e589',
-    lat: 41.40578461,
-    lon: 2.20155716,
-    timestamp: 1514737185665 }
-  ]
-```
-
 - `/api/v1/getDownload` - Get all Points
+
+- `/api/v1/getDownload/{device}` - Get Points by device in CSV
+    
+    Mandatory parameter:
+
+    `device` - Device ID
+
+    Optional parameters:
+
+     `bbox` - xmin,ymin,xmax,ymax
+
+     `dateBefore` - Milliseconds
+
+     `dateAfter` - Milliseconds
 
 - `/api/v1/getByDevice/{device}`- Get points by device
 
@@ -44,6 +41,16 @@ The OpenAnonymousLocation API provide you methods to publish and request geoloca
      `dateBefore` - Milliseconds
 
      `dateAfter` - Milliseconds
+
+     `format` - JSON || GEOJSON
+
+- `/api/v1/getLastPosition/{device}`- Get last point by device
+
+    Mandatory parameter:
+
+    `device` - Device ID
+
+    Optional parameters:
 
      `format` - JSON || GEOJSON
 
@@ -76,6 +83,24 @@ The OpenAnonymousLocation API provide you methods to publish and request geoloca
     `lon` - Longitude
 
     `timestamp` - Milliseconds
+
+- `/api/v1/insertJSON` - POST: Insert array JSON 
+
+    Mandatory body parameter:
+    `geolocations`
+
+    Sample Array JSON:
+```
+  [
+  { id: 13,
+    device: 'b2cda548-afaf-4073-9a53-4ed8bab7ea76',
+    session: '9f869b70-1e21-4b7e-84c4-07f68b95e589',
+    lat: 41.40578461,
+    lon: 2.20155716,
+    timestamp: 1514737185665,
+    accuracy: 11 }
+  ]
+```
 
 #### Sample requests
 [http://openanonymouslocation.org/api/v1/getByDevice/demo-openanonymouslocation-web](http://openanonymouslocation.org/api/v1/getByDevice/demo-openanonymouslocation-web)
@@ -111,6 +136,11 @@ To develope and install your own API instance
     `lat` FLOAT( 12, 8 ) NOT NULL ,
     `lon` FLOAT( 12, 8 ) NOT NULL,
     `timestamp` BIGINT( 20 ) NOT NULL ,
+    `accuracy` VARCHAR (60) NULL,
+    `provider` VARCHAR (60) NULL,
+    `locationProvider` VARCHAR (6) NULL,
+    `speed` VARCHAR (6) NULL,
+    `altitude` VARCHAR (6) NULL,
     UNIQUE KEY `geolocation_id_unique` (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
